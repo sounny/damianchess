@@ -1,0 +1,118 @@
+/* Game container layout */
+.game-container {
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  gap: 30px;
+  max-width: 1000px;
+  margin: 0 auto;
+  flex-wrap: wrap;
+}
+
+/* Board styles */
+#board-container {
+  flex-shrink: 0;
+}
+
+#board {
+  width: 400px;
+  box-shadow: 0 0 12px rgba(0,0,0,0.5);
+  border-radius: 8px;
+}
+
+/* Dashboard styles */
+#dashboard {
+  width: 250px;
+  background-color: #3a3f4a;
+  border-radius: 8px;
+  padding: 15px;
+  box-shadow: 0 0 10px rgba(0,0,0,0.3);
+  text-align: left;
+}
+
+#dashboard h2 {
+  font-size: 1.2em;
+  margin-top: 0;
+  margin-bottom: 8px;
+  color: #61dafb;
+  border-bottom: 1px solid #4a505c;
+  padding-bottom: 5px;
+}
+
+/* Status panel */
+#status-panel {
+  margin-bottom: 20px;
+}
+
+#status {
+  font-size: 1.1em;
+  font-weight: bold;
+  padding: 5px 0;
+}
+
+/* Timer panel */
+#timer-panel {
+  margin-bottom: 20px;
+}
+
+.timer {
+  padding: 8px 10px;
+  margin-bottom: 8px;
+  background-color: #2c313a;
+  border-radius: 4px;
+  font-family: monospace;
+  font-size: 1.1em;
+}
+
+.timer span {
+  float: right;
+  font-weight: bold;
+}
+
+.active-timer {
+  background-color: #3c424d;
+  box-shadow: inset 0 0 5px rgba(0,0,0,0.2);
+  color: #61dafb;
+}
+
+/* Move history */
+#history-panel {
+  margin-bottom: 15px;
+}
+
+#move-history {
+  background-color: #2c313a;
+  border-radius: 4px;
+  padding: 12px;
+  height: 200px;
+  overflow-y: auto;
+  font-family: monospace;
+  line-height: 1.5;
+}
+
+.move-pair {
+  margin-bottom: 5px;
+}
+
+.move-number {
+  color: #888;
+  margin-right: 8px;
+}
+
+.move-notation {
+  margin-right: 8px;
+}
+
+/* Responsive adjustments */
+@media (max-width: 768px) {
+  .game-container {
+    flex-direction: column;
+    align-items: center;
+  }
+  
+  #dashboard {
+    width: 400px;
+    max-width: 90%;
+    margin-top: 20px;
+  }
+}

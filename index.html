@@ -7,6 +7,7 @@
 
   <!-- ✅ Working chessboard.js CSS from GitHub -->
   <link rel="stylesheet" href="lib/chessboard-1.0.0.min.css"/>
+  <link rel="stylesheet" href="css/style.css"/>
 
   <style>
     body {
@@ -16,12 +17,6 @@
       color: white;
       margin: 0;
       padding: 20px;
-    }
-    #board {
-      width: 400px;
-      margin: 20px auto;
-      box-shadow: 0 0 12px rgba(0,0,0,0.5);
-      border-radius: 8px;
     }
     h1 {
       font-size: 2.5em;
@@ -33,56 +28,35 @@
 <body>
 
   <h1>DamianChess</h1>
-  <div id="board"></div>
+  
+  <div class="game-container">
+    <div id="board-container">
+      <div id="board"></div>
+    </div>
+    
+    <div id="dashboard">
+      <div id="status-panel">
+        <h2>Status</h2>
+        <div id="status">White to move</div>
+      </div>
+      
+      <div id="timer-panel">
+        <h2>Timers</h2>
+        <div class="timer" id="white-timer">White: <span>10:00</span></div>
+        <div class="timer" id="black-timer">Black: <span>10:00</span></div>
+      </div>
+      
+      <div id="history-panel">
+        <h2>Move History</h2>
+        <div id="move-history"></div>
+      </div>
+    </div>
+  </div>
 
   <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
-
-
-  <!-- ✅ Working chess.js -->
   <script src="lib/chess.min.js"></script>
-
-  <!-- ✅ Working chessboard.js from GitHub pages -->
   <script src="lib/chessboard-1.0.0.min.js"></script>
-
-  <script>
-    const game = new Chess();
-
-    function onDragStart(source, piece) {
-      if (game.game_over()) return false;
-
-      if (
-        (game.turn() === "w" && piece.search(/^b/) !== -1) ||
-        (game.turn() === "b" && piece.search(/^w/) !== -1)
-      ) {
-        return false;
-      }
-    }
-
-    function onDrop(source, target) {
-      const move = game.move({
-        from: source,
-        to: target,
-        promotion: "q",
-      });
-
-      if (move === null) return "snapback";
-    }
-
-    function onSnapEnd() {
-      board.position(game.fen());
-    }
-
-    const board = Chessboard("board", {
-      draggable: true,
-      position: "start",
-      pieceTheme: "img/{piece}.png", // 👈 tells it where to find piece images
-      onDragStart,
-      onDrop,
-      onSnapEnd
-    });
-
-    window.addEventListener("resize", board.resize);
-  </script>
+  <script src="js/script.js"></script>
 
 </body>
 </html>

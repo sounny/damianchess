@@ -108,11 +108,13 @@
 
 /* Captured Pieces panel */
 #captured-container {
-  width: 100%;             /* same as board width */
-  margin-top: 10px;
-  background: #20232a;
-  padding: 8px;
+  background: #3a3f4d;    /* same as dashboard */
   border-radius: 6px;
+  padding: 8px;
+  margin-top: 10px;
+  width: 100%;
+  max-width: 450px;       /* lock to board width */
+  overflow-x: auto;       /* scroll if too wide */
 }
 
 .captured-row {
@@ -130,14 +132,83 @@
 }
 
 .captured-pieces {
-  display: flex;
-  flex-wrap: wrap;
+  display: inline-flex;
+  white-space: nowrap;
 }
 
 .captured-piece {
   width: 32px;
   height: 32px;
   margin: 0 4px;
+}
+
+/* wrapper to hold select + icon */
+.select-wrapper {
+  position: relative;
+  display: inline-block;
+}
+
+.select-wrapper select {
+  appearance: none;
+  padding: 6px 28px 6px 10px;
+  border-radius: 4px;
+  border: 1px solid #555;
+  background: #282c34;
+  color: #fff;
+  font-size: 0.9em;
+}
+
+/* chevron arrow */
+.select-wrapper .chevron {
+  position: absolute;
+  right: 8px;
+  top: 50%;
+  transform: translateY(-50%);
+  pointer-events: none;
+  color: #aaa;
+}
+
+/* label look */
+#menu-panel-captured {
+  margin-bottom: 8px;
+  color: #61dafb;
+  font-weight: bold;
+}
+
+/* Side‑panel menu */
+#menu-panel-side {
+  margin-bottom: 12px;
+  text-align: left;
+}
+
+#menu-panel-side label {
+  color: #61dafb;
+  font-weight: bold;
+  margin-right: 8px;
+}
+
+.select-wrapper {
+  position: relative;
+  display: inline-block;
+}
+
+.select-wrapper select {
+  appearance: none;
+  background: #1f242d;    /* dark to match side panel */
+  border: 1px solid #555;
+  color: #fff;
+  padding: 6px 28px 6px 10px;
+  border-radius: 4px;
+  font-size: 0.9em;
+}
+
+.select-wrapper .chevron {
+  position: absolute;
+  right: 8px;
+  top: 50%;
+  transform: translateY(-50%);
+  pointer-events: none;
+  color: #aaa;
 }
 
 /* Responsive adjustments */

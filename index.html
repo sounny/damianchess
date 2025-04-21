@@ -32,6 +32,18 @@
   <div class="game-container">
     <div id="board-container">
       <div id="board"></div>
+
+      <!-- Captured Pieces Panel now lives under the board -->
+      <div id="captured-container">
+        <div class="captured-row" id="captured-by-white">
+          <span class="captured-label">Captured by White:</span>
+          <div class="captured-pieces"></div>
+        </div>
+        <div class="captured-row" id="captured-by-black">
+          <span class="captured-label">Captured by Black:</span>
+          <div class="captured-pieces"></div>
+        </div>
+      </div>
     </div>
     
     <div id="dashboard">
@@ -59,18 +71,6 @@
           <option value="stockfish">Stockfish</option>
         </select>
       </div>
-    </div>
-  </div>
-
-  <!-- Captured Pieces Panel -->
-  <div id="captured-container">
-    <div class="captured-row" id="captured-by-white">
-      <span class="captured-label">Captured by White:</span>
-      <div class="captured-pieces"></div>
-    </div>
-    <div class="captured-row" id="captured-by-black">
-      <span class="captured-label">Captured by Black:</span>
-      <div class="captured-pieces"></div>
     </div>
   </div>
 

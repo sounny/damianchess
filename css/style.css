@@ -11,6 +11,9 @@
 
 /* Board styles */
 #board-container {
+  display: flex;
+  flex-direction: column;  /* stack board and capture rows */
+  align-items: center;     /* center them horizontally */
   flex-shrink: 0;
 }
 
@@ -105,24 +108,25 @@
 
 /* Captured Pieces panel */
 #captured-container {
-  margin-top: 20px;
-  background: #20232a;       /* match dark theme */
-  padding: 10px;
-  border-radius: 8px;
+  width: 100%;             /* same as board width */
+  margin-top: 10px;
+  background: #20232a;
+  padding: 8px;
+  border-radius: 6px;
 }
 
 .captured-row {
   display: flex;
   align-items: center;
-  margin: 5px 0;
+  margin: 4px 0;
 }
 
 .captured-label {
   color: #fff;
   font-weight: bold;
-  margin-right: 10px;
-  min-width: 130px;
+  min-width: 120px;
   text-align: right;
+  margin-right: 8px;
 }
 
 .captured-pieces {

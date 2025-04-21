@@ -1,67 +1,119 @@
 const game = new Chess();
 let board = null;
 const moveHistory = [];
+const capturedByWhite = [];
+const capturedByBlack = [];
 let whiteTime = 600; // 10 minutes in seconds
 let blackTime = 600;
 let activeTimer = null;
 let timerInterval = null;
+let opponentSelect = null;
 
-// Initialize the board
+// Initialize the board and UI
 function initializeBoard() {
+  opponentSelect = document.getElementById('opponent-select');
+
   const config = {
     draggable: true,
     position: 'start',
     pieceTheme: 'img/{piece}.png',
-    onDragStart: onDragStart,
-    onDrop: onDrop,
-    onSnapEnd: onSnapEnd
+    onDragStart,
+    onDrop,
+    onSnapEnd
   };
   
   board = Chessboard('board', config);
-  
-  // Initial UI update
+
   updateStatus();
   updateTimerDisplay();
-  
-  // Start timers
   startTimer();
-
-  // Handle window resize
   window.addEventListener('resize', board.resize);
 }
 
+// Prevent illegal drags
 function onDragStart(source, piece) {
-  // Don't allow moves if game is over
   if (game.game_over()) return false;
-
-  // Only allow the current player to move their pieces
   if (
     (game.turn() === 'w' && piece.search(/^b/) !== -1) ||
     (game.turn() === 'b' && piece.search(/^w/) !== -1)
-  ) {
-    return false;
-  }
+  ) return false;
 }
 
+// Handle a human move
 function onDrop(source, target) {
-  // Try to make the move
   const move = game.move({
     from: source,
     to: target,
-    promotion: 'q' // Always promote to queen for simplicity
+    promotion: 'q'
   });
 
-  // If illegal move
   if (move === null) return 'snapback';
-  
-  // Valid move
+
   moveHistory.push(move);
+
+  // Track captures
+  if (move.captured) {
+    const capColor = move.color === 'w' ? 'b' : 'w';
+    const capPiece = move.captured.toUpperCase();
+    const code = capColor + capPiece;  // e.g. 'bP' for a black pawn
+    if (move.color === 'w') {
+      capturedByWhite.push(code);
+    } else {
+      capturedByBlack.push(code);
+    }
+    updateCaptured();
+  }
+
   updateStatus();
   updateMoveHistory();
+
+  // If Stockfish is chosen and it's Black's turn, ask the engine
+  if (
+    opponentSelect &&
+    opponentSelect.value === 'stockfish' &&
+    game.turn() === 'b' &&
+    !game.game_over()
+  ) {
+    // small delay so UI updates first
+    setTimeout(requestStockfishMove, 250);
+  }
 }
 
+// Sync the board graphic
 function onSnapEnd() {
   board.position(game.fen());
+}
+
+// Ask the Stockfish REST API for a move
+async function requestStockfishMove() {
+  const fen = game.fen();
+  const url = `https://stockfish.online/api/s/v2.php?fen=${encodeURIComponent(fen)}&depth=15`;
+
+  try {
+    const resp = await fetch(url);
+    const data = await resp.json();
+
+    if (data.success) {
+      // parse UCI from "bestmove e7e5 ponder ..."
+      const parts = data.bestmove.split(' ');
+      const uci = parts[1];
+      const from = uci.slice(0, 2);
+      const to   = uci.slice(2, 4);
+      const promotion = uci.length > 4 ? uci[4] : 'q';
+
+      const engineMove = game.move({ from, to, promotion });
+      if (engineMove) {
+        moveHistory.push(engineMove);
+        board.position(game.fen());
+        updateStatus();
+        updateMoveHistory();
+      }
+    } else {
+      console.error('Stockfish error:', data.data);
+    }
+  } catch (err) {
+    console.error('API call failed:', err);
+  }
 }
 
 // Update game status
@@ -116,6 +168,27 @@ function updateMoveHistory() {
   
   historyElement.innerHTML = html;
   historyElement.scrollTop = historyElement.scrollHeight;
+}
+
+// Update captured pieces display
+function updateCaptured() {
+  const whiteDiv = document.querySelector('#captured-by-white .captured-pieces');
+  whiteDiv.innerHTML = '';
+  capturedByWhite.forEach(code => {
+    const img = document.createElement('img');
+    img.src = `img/${code}.png`;
+    img.className = 'captured-piece';
+    whiteDiv.appendChild(img);
+  });
+
+  const blackDiv = document.querySelector('#captured-by-black .captured-pieces');
+  blackDiv.innerHTML = '';
+  capturedByBlack.forEach(code => {
+    const img = document.createElement('img');
+    img.src = `img/${code}.png`;
+    img.className = 'captured-piece';
+    blackDiv.appendChild(img);
+  });
 }
 
 // Timer functions

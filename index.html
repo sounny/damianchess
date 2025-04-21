@@ -50,6 +50,27 @@
         <h2>Move History</h2>
         <div id="move-history"></div>
       </div>
+      
+      <div id="menu-panel">
+        <h2>Menu</h2>
+        <label for="opponent-select">Black:</label>
+        <select id="opponent-select">
+          <option value="human">Human</option>
+          <option value="stockfish">Stockfish</option>
+        </select>
+      </div>
+    </div>
+  </div>
+
+  <!-- Captured Pieces Panel -->
+  <div id="captured-container">
+    <div class="captured-row" id="captured-by-white">
+      <span class="captured-label">Captured by White:</span>
+      <div class="captured-pieces"></div>
+    </div>
+    <div class="captured-row" id="captured-by-black">
+      <span class="captured-label">Captured by Black:</span>
+      <div class="captured-pieces"></div>
     </div>
   </div>
 

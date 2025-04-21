@@ -103,6 +103,39 @@
   margin-right: 8px;
 }
 
+/* Captured Pieces panel */
+#captured-container {
+  margin-top: 20px;
+  background: #20232a;       /* match dark theme */
+  padding: 10px;
+  border-radius: 8px;
+}
+
+.captured-row {
+  display: flex;
+  align-items: center;
+  margin: 5px 0;
+}
+
+.captured-label {
+  color: #fff;
+  font-weight: bold;
+  margin-right: 10px;
+  min-width: 130px;
+  text-align: right;
+}
+
+.captured-pieces {
+  display: flex;
+  flex-wrap: wrap;
+}
+
+.captured-piece {
+  width: 32px;
+  height: 32px;
+  margin: 0 4px;
+}
+
 /* Responsive adjustments */
 @media (max-width: 768px) {
   .game-container {

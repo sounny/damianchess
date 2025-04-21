@@ -94,19 +94,35 @@ async function requestStockfishMove() {
     const data = await resp.json();
 
     if (data.success) {
-      // parse UCI from "bestmove e7e5 ponder ..."
       const parts = data.bestmove.split(' ');
       const uci = parts[1];
       const from = uci.slice(0, 2);
       const to   = uci.slice(2, 4);
       const promotion = uci.length > 4 ? uci[4] : 'q';
 
+      // Make the engine move
       const engineMove = game.move({ from, to, promotion });
       if (engineMove) {
+        // --- NEW: track captures from Stockfish ---
+        if (engineMove.captured) {
+          // engineMove.color is who just moved ('b')
+          const capColor = engineMove.color === 'w' ? 'b' : 'w';
+          const capPiece = engineMove.captured.toUpperCase();
+          const code = capColor + capPiece;  // e.g. 'bP' for a black pawn
+          
+          if (engineMove.color === 'w') {
+            capturedByWhite.push(code);
+          } else {
+            capturedByBlack.push(code);
+          }
+        }
+        // -----------------------------------------
+
         moveHistory.push(engineMove);
         board.position(game.fen());
         updateStatus();
         updateMoveHistory();
+        updateCaptured();  // re-render the captured panel
       }
     } else {
       console.error('Stockfish error:', data.data);

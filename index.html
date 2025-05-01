@@ -26,6 +26,7 @@
     .select-wrapper {
       position: relative;
       display: inline-block;
+      width: 150px; /* Ensure consistent width for alignment */
     }
     .select-wrapper select {
       appearance: none;
@@ -36,6 +37,8 @@
       padding: 5px 10px;
       font-size: 1em;
       border-radius: 4px;
+      width: 100%; /* Match the width of the wrapper */
+      box-sizing: border-box; /* Include padding in width calculation */
     }
     .select-wrapper .chevron {
       position: absolute;
@@ -76,7 +79,17 @@
         <div class="select-wrapper">
           <select id="opponent-select">
             <option value="human">Human</option>
-            <option value="stockfish">Stockfish</option>
+            <option value="stockfish" selected>Stockfish</option>
+          </select>
+          <span class="chevron">▾</span>
+        </div>
+
+        <label for="difficulty-select">Difficulty:</label>
+        <div class="select-wrapper">
+          <select id="difficulty-select">
+            <option value="easy">1200 USCF</option>
+            <option value="medium" selected>1800 USCF</option>
+            <option value="hard">2200+ USCF</option>
           </select>
           <span class="chevron">▾</span>
         </div>
@@ -88,9 +101,13 @@
       </div>
       
       <div id="timer-panel">
-        <h2>Timers</h2>
+        <h2>Timers <button id="pause-button">Pause</button></h2>
         <div class="timer" id="white-timer">White: <span>10:00</span></div>
         <div class="timer" id="black-timer">Black: <span>10:00</span></div>
+      </div>
+      
+      <div id="pause-panel">
+        <!-- Removed the slider bar for pausing the timer -->
       </div>
       
       <div id="history-panel">

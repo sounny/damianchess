@@ -146,16 +146,19 @@
 .select-wrapper {
   position: relative;
   display: inline-block;
+  margin-bottom: 10px; /* Add spacing between dropdowns */
 }
 
 .select-wrapper select {
   appearance: none;
-  padding: 6px 28px 6px 10px;
+  padding: 5px 3em 5px 10px; /* give extra room on the right so text can’t live under the arrow */
+  box-sizing: border-box; /* make padding count toward that width */
   border-radius: 4px;
   border: 1px solid #555;
   background: #282c34;
-  color: #fff;
+  color: #000; /* black text for visibility */
   font-size: 0.9em;
+  width: 110%; /* makes the select 10% wider */
 }
 
 /* chevron arrow */
@@ -190,16 +193,19 @@
 .select-wrapper {
   position: relative;
   display: inline-block;
+  margin-bottom: 10px; /* Add spacing between dropdowns */
 }
 
 .select-wrapper select {
   appearance: none;
   background: #1f242d;    /* dark to match side panel */
   border: 1px solid #555;
-  color: #fff;
-  padding: 6px 28px 6px 10px;
+  color: #000; /* black text for visibility */
+  padding: 5px 3em 5px 10px; /* give extra room on the right so text can’t live under the arrow */
+  box-sizing: border-box; /* make padding count toward that width */
   border-radius: 4px;
   font-size: 0.9em;
+  width: 110%; /* makes the select 10% wider */
 }
 
 .select-wrapper .chevron {
@@ -209,6 +215,23 @@
   transform: translateY(-50%);
   pointer-events: none;
   color: #aaa;
+}
+
+/* Pause button */
+#pause-button {
+  appearance: none;
+  background: #1f242d; /* Match dropdown menu style */
+  border: 1px solid #555;
+  color: #fff;
+  padding: 5px 10px;
+  font-size: 0.9em;
+  border-radius: 4px;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+
+#pause-button:hover {
+  background: #282c34; /* Slightly lighter on hover */
 }
 
 /* Responsive adjustments */

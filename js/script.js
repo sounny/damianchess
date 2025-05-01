@@ -8,6 +8,12 @@ let blackTime = 600;
 let activeTimer = null;
 let timerInterval = null;
 let opponentSelect = null;
+const difficultySelect = document.getElementById('difficulty-select');
+const difficultyLevels = {
+  easy: 5,
+  medium: 15,
+  hard: 25
+};
 
 // Initialize the board and UI
 function initializeBoard() {
@@ -28,6 +34,28 @@ function initializeBoard() {
   updateTimerDisplay();
   startTimer();
   window.addEventListener('resize', board.resize);
+
+  const pauseSlider = document.getElementById('pause-slider');
+
+  pauseSlider.addEventListener('input', () => {
+    if (pauseSlider.value === '1') {
+      stopTimer(); // Pause the timer
+    } else {
+      startTimer(); // Resume the timer
+    }
+  });
+
+  const pauseButton = document.getElementById('pause-button');
+
+  pauseButton.addEventListener('click', () => {
+    if (timerInterval) {
+      stopTimer(); // Pause the timer
+      pauseButton.textContent = 'Resume';
+    } else {
+      startTimer(); // Resume the timer
+      pauseButton.textContent = 'Pause';
+    }
+  });
 }
 
 // Prevent illegal drags
@@ -87,7 +115,8 @@ function onSnapEnd() {
 // Ask the Stockfish REST API for a move
 async function requestStockfishMove() {
   const fen = game.fen();
-  const url = `https://stockfish.online/api/s/v2.php?fen=${encodeURIComponent(fen)}&depth=15`;
+  const depth = difficultyLevels[difficultySelect.value] || 15; // Default to medium if not set
+  const url = `https://stockfish.online/api/s/v2.php?fen=${encodeURIComponent(fen)}&depth=${depth}`;
 
   try {
     const resp = await fetch(url);
@@ -100,29 +129,25 @@ async function requestStockfishMove() {
       const to   = uci.slice(2, 4);
       const promotion = uci.length > 4 ? uci[4] : 'q';
 
-      // Make the engine move
       const engineMove = game.move({ from, to, promotion });
       if (engineMove) {
-        // --- NEW: track captures from Stockfish ---
         if (engineMove.captured) {
-          // engineMove.color is who just moved ('b')
           const capColor = engineMove.color === 'w' ? 'b' : 'w';
           const capPiece = engineMove.captured.toUpperCase();
-          const code = capColor + capPiece;  // e.g. 'bP' for a black pawn
-          
+          const code = capColor + capPiece;
+
           if (engineMove.color === 'w') {
             capturedByWhite.push(code);
           } else {
             capturedByBlack.push(code);
           }
         }
-        // -----------------------------------------
 
         moveHistory.push(engineMove);
         board.position(game.fen());
         updateStatus();
         updateMoveHistory();
-        updateCaptured();  // re-render the captured panel
+        updateCaptured();
       }
     } else {
       console.error('Stockfish error:', data.data);

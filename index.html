@@ -73,8 +73,22 @@
     </div>
     
     <div id="dashboard">
-      <!-- ⬆︎ New menu up here -->
+      <div id="logo-container">
+        <img src="img/dcappicon.png" alt="DamianChess Logo" />
+      </div>
+      <div id="status-panel">
+        <h2>Status</h2>
+        <div id="status">White to move</div>
+      </div>
+
+      <div id="timer-panel">
+        <h2>Timers <button id="pause-button" title="Pause timers">Pause</button></h2>
+        <div class="timer" id="white-timer">White: <span>10:00</span></div>
+        <div class="timer" id="black-timer">Black: <span>10:00</span></div>
+      </div>
+
       <div id="menu-panel-side">
+        <h2>Game Settings</h2>
         <label for="opponent-select">Play vs:</label>
         <div class="select-wrapper">
           <select id="opponent-select">
@@ -95,21 +109,6 @@
         </div>
       </div>
 
-      <div id="status-panel">
-        <h2>Status</h2>
-        <div id="status">White to move</div>
-      </div>
-      
-      <div id="timer-panel">
-        <h2>Timers <button id="pause-button">Pause</button></h2>
-        <div class="timer" id="white-timer">White: <span>10:00</span></div>
-        <div class="timer" id="black-timer">Black: <span>10:00</span></div>
-      </div>
-      
-      <div id="pause-panel">
-        <!-- Removed the slider bar for pausing the timer -->
-      </div>
-      
       <div id="history-panel">
         <h2>Move History</h2>
         <div id="move-history"></div>

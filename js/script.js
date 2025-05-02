@@ -35,16 +35,6 @@ function initializeBoard() {
   startTimer();
   window.addEventListener('resize', board.resize);
 
-  const pauseSlider = document.getElementById('pause-slider');
-
-  pauseSlider.addEventListener('input', () => {
-    if (pauseSlider.value === '1') {
-      stopTimer(); // Pause the timer
-    } else {
-      startTimer(); // Resume the timer
-    }
-  });
-
   const pauseButton = document.getElementById('pause-button');
 
   pauseButton.addEventListener('click', () => {

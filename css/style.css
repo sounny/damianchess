@@ -25,7 +25,7 @@
 
 /* Dashboard styles */
 #dashboard {
-  width: 250px;
+  width: 275px; /* increased width by ~10% */
   background-color: #3a3f4a;
   border-radius: 8px;
   padding: 15px;
@@ -42,20 +42,26 @@
   padding-bottom: 5px;
 }
 
+/* Section spacing */
+#status-panel,
+#timer-panel,
+#menu-panel-side,
+#history-panel {
+  margin-bottom: 25px;
+}
+
 /* Status panel */
 #status-panel {
-  margin-bottom: 20px;
 }
 
 #status {
-  font-size: 1.1em;
+  font-size: 1.2em;
   font-weight: bold;
   padding: 5px 0;
 }
 
 /* Timer panel */
 #timer-panel {
-  margin-bottom: 20px;
 }
 
 .timer {
@@ -64,7 +70,7 @@
   background-color: #2c313a;
   border-radius: 4px;
   font-family: monospace;
-  font-size: 1.1em;
+  font-size: 1.15em;
 }
 
 .timer span {
@@ -80,7 +86,6 @@
 
 /* Move history */
 #history-panel {
-  margin-bottom: 15px;
 }
 
 #move-history {
@@ -161,6 +166,11 @@
   width: 110%; /* makes the select 10% wider */
 }
 
+.select-wrapper select:hover {
+  border-color: #61dafb;
+  background-color: #323842;
+}
+
 /* chevron arrow */
 .select-wrapper .chevron {
   position: absolute;
@@ -182,21 +192,12 @@
 #menu-panel-side {
   position: relative;
   margin-top: 0; /* Remove extra spacing */
-  padding-top: calc(100% + 20px); /* Add spacing below the icon to move menu elements down */
+  padding-top: 0; /* Remove previous padding for pseudo-logo */
 }
 
 #menu-panel-side::before {
-  content: '';
-  display: block;
-  width: 100%;
-  height: 0;
-  padding-top: 100%; /* Maintain a square aspect ratio */
-  background-image: url('../img/dcappicon.png');
-  background-size: cover; /* Ensure the image covers the area */
-  background-repeat: no-repeat;
-  background-position: center;
-  position: absolute;
-  top: 0; /* Align the icon with the top of the menu */
+  content: none;
+  display: none; /* Remove pseudo-element logo */
 }
 
 #menu-panel-side label {
@@ -221,6 +222,11 @@
   border-radius: 4px;
   font-size: 0.9em;
   width: 110%; /* makes the select 10% wider */
+}
+
+.select-wrapper select:hover {
+  border-color: #61dafb;
+  background-color: #323842;
 }
 
 .select-wrapper .chevron {
@@ -252,6 +258,28 @@
 /* Remove the text title above the menu */
 h1 {
   display: none;
+}
+
+/* Logo container styling */
+#logo-container {
+  width: 100%; /* Span the content area of the dashboard */
+  margin: 0 0 20px 0; /* 0 top/left/right margin, 20px bottom margin for spacing */
+  padding: 0; /* No extra padding inside the container */
+  box-sizing: border-box; /* Standard box model */
+  text-align: center; /* Center content */
+}
+
+#logo-container img {
+  display: block; /* Ensure block-level behavior */
+  width: 100%; /* Fill the container width */
+  max-width: 100%; /* Prevent exceeding container */
+  height: auto; /* Maintain aspect ratio */
+  margin: 0 auto; /* Center horizontally */
+}
+
+/* Move hint highlight */
+.square-55d63.move-hint {
+  background: rgba(255,255,0,0.4) !important;
 }
 
 /* Responsive adjustments */
